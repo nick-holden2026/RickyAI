@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The AI &amp; Technology Mastery Academy</title>
+  <title>RickyAI — AI &amp; Technology Mastery Academy</title>
   <style>
 /* ==========================================================================
    AI & TECHNOLOGY MASTERY ACADEMY — DESIGN SYSTEM
@@ -912,7 +912,7 @@ textarea { resize: vertical; min-height: 88px; }
 }
 .toast-container {
   position: fixed;
-  top: 1rem;
+  top: 4.75rem;
   right: 1rem;
   z-index: 95;
   display: flex;
@@ -928,7 +928,7 @@ textarea { resize: vertical; min-height: 88px; }
   border-radius: var(--radius-sm);
   box-shadow: var(--shadow-md);
   font-size: 0.88rem;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 /* Certificate */
@@ -1049,8 +1049,8 @@ textarea { resize: vertical; min-height: 88px; }
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
         </div>
         <div>
-          <div class="brand-title">AI Mastery Academy</div>
-          <div class="brand-sub">20-Level Creator Path</div>
+          <div class="brand-title">RickyAI</div>
+          <div class="brand-sub">AI Mastery Academy</div>
         </div>
       </div>
 
@@ -1154,12 +1154,12 @@ const ACADEMY_CONFIG = {
   storageKey: "ai_tech_mastery_academy_v2",
   defaultPassingScore: 80,
   masteryScale: [
-    { id: "unseen", label: "Unseen", color: "badge" },
-    { id: "introduced", label: "Introduced", color: "badge-indigo" },
-    { id: "practicing", label: "Practicing", color: "badge-primary" },
-    { id: "competent", label: "Competent", color: "badge-amber" },
-    { id: "mastered", label: "Mastered", color: "badge-emerald" },
-    { id: "needs_revision", label: "Needs Revision", color: "badge-rose" }
+    { id: "not_started", level: 0, label: "0 — Not Started", color: "badge" },
+    { id: "introduced", level: 1, label: "1 — Introduced", color: "badge-indigo" },
+    { id: "practicing", level: 2, label: "2 — Practicing", color: "badge-primary" },
+    { id: "competent", level: 3, label: "3 — Competent", color: "badge-amber" },
+    { id: "mastered", level: 4, label: "4 — Mastered", color: "badge-emerald" },
+    { id: "needs_revision", level: 1, label: "Needs Revision", color: "badge-rose" }
   ]
 };
 
@@ -1459,11 +1459,130 @@ const CAREER_TRACKS = [
 ];
 
 
+const SKILL_TREE_BRANCHES = [
+  {
+    branch: "FOUNDATIONS",
+    color: "#38bdf8",
+    nodes: [
+      { id: "sk_hw", name: "Hardware & OS", level: 0, prereqs: [], careers: ["IT Support Specialist", "Computer Technician"] },
+      { id: "sk_net", name: "Internet & Security", level: 0, prereqs: ["sk_hw"], careers: ["IT Support Specialist", "Cloud Engineer"] },
+      { id: "sk_ai_lit", name: "AI Literacy & Prompting", level: 1, prereqs: ["sk_net"], careers: ["AI Product Manager", "AI Engineer"] }
+    ]
+  },
+  {
+    branch: "PYTHON & ENGINEERING",
+    color: "#fbbf24",
+    nodes: [
+      { id: "sk_var", name: "Variables & Conditions", level: 2, prereqs: ["sk_hw"], careers: ["Software Developer"] },
+      { id: "sk_loop", name: "Loops & Functions", level: 2, prereqs: ["sk_var"], careers: ["Software Developer", "Data Scientist"] },
+      { id: "sk_ds", name: "Data Structures & OOP", level: 3, prereqs: ["sk_loop"], careers: ["Software Developer", "Backend Engineer"] },
+      { id: "sk_git", name: "Git, Testing & APIs", level: 3, prereqs: ["sk_ds"], careers: ["Full-Stack Developer", "MLOps Engineer"] },
+      { id: "sk_web", name: "HTML, CSS, JS & Full-Stack", level: 4, prereqs: ["sk_git"], careers: ["Web Developer", "Full-Stack Developer"] }
+    ]
+  },
+  {
+    branch: "DATA & MATH",
+    color: "#34d399",
+    nodes: [
+      { id: "sk_math", name: "Linear Algebra & Calculus", level: 5, prereqs: ["sk_loop"], careers: ["Machine Learning Engineer", "AI Researcher"] },
+      { id: "sk_prob", name: "Probability & Statistics", level: 5, prereqs: ["sk_math"], careers: ["Data Scientist"] },
+      { id: "sk_sql", name: "SQL & Data Cleaning", level: 6, prereqs: ["sk_var"], careers: ["Data Analyst", "Business Intelligence Analyst"] },
+      { id: "sk_pandas", name: "NumPy, Pandas & Viz", level: 6, prereqs: ["sk_sql", "sk_loop"], careers: ["Data Scientist", "Data Analyst"] }
+    ]
+  },
+  {
+    branch: "AI, LLM & AGENTS",
+    color: "#a78bfa",
+    nodes: [
+      { id: "sk_ml", name: "Supervised & Unsupervised ML", level: 7, prereqs: ["sk_prob", "sk_pandas"], careers: ["Machine Learning Engineer"] },
+      { id: "sk_xgb", name: "Ensembles & Optimization", level: 8, prereqs: ["sk_ml"], careers: ["Machine Learning Engineer"] },
+      { id: "sk_dl", name: "Neural Nets & PyTorch", level: 9, prereqs: ["sk_ml", "sk_math"], careers: ["AI Researcher", "Machine Learning Engineer"] },
+      { id: "sk_cv_nlp", name: "Computer Vision & NLP", level: 10, prereqs: ["sk_dl"], careers: ["AI Engineer"] },
+      { id: "sk_llm", name: "Transformers & LLM Eng", level: 13, prereqs: ["sk_cv_nlp", "sk_ai_lit"], careers: ["LLM & RAG Engineer", "AI Engineer"] },
+      { id: "sk_rag", name: "RAG & Vector Search", level: 14, prereqs: ["sk_llm", "sk_sql"], careers: ["LLM & RAG Engineer"] },
+      { id: "sk_agent", name: "AI Agents & Guardrails", level: 15, prereqs: ["sk_rag", "sk_git"], careers: ["AI Automation Engineer"] },
+      { id: "sk_mlops", name: "MLOps, Security & Research", level: 16, prereqs: ["sk_agent"], careers: ["MLOps Engineer", "AI Startup Founder"] }
+    ]
+  }
+];
+
+
 /* ==========================================================================
    CURRICULUM DATA: LEVELS 1 TO 10 (FOUNDATIONS -> FULL-STACK ARCHITECTURE)
    ========================================================================== */
 
 const CURRICULUM_1_10 = [
+  {
+    id: 0,
+    title: "Digital Foundations",
+    zoneName: "Genesis Terminal",
+    tier: "Guided Beginner",
+    themeColor: "#38bdf8",
+    story: "Every builder starts here. Master computer fundamentals, Windows & Linux basics, files, typing, internet safety, and troubleshooting.",
+    prerequisites: [],
+    skillTags: ["Computer Literacy", "Hardware Architecture", "File Systems", "Troubleshooting"],
+    labId: "pc_lab",
+    unlockCondition: "Unlocked from Day 1",
+    objectives: [
+      "Understand hardware (CPU, RAM, GPU, SSD) vs Operating Systems (Windows & Linux).",
+      "Organize files, folders, downloads, cloud storage, and email cleanly.",
+      "Defend against phishing and troubleshoot common computer problems systematically."
+    ],
+    finalMission: "Organize a clean digital workspace, verify cloud backups, and pass the Digital Foundations assessment.",
+    chapters: [
+      {
+        id: "0-1",
+        title: "Hardware, OS & File Systems",
+        objectives: ["Distinguish CPU, RAM, GPU, and Storage", "Navigate Windows & Linux file hierarchies"],
+        lessons: [
+          {
+            id: "0-1-1",
+            title: "Computers, Hardware & Operating Systems",
+            duration: "9 min",
+            whatYouLearn: "How CPU, RAM, Storage, GPU, Windows, and Linux work together.",
+            whyMatters: "Every software, data, and AI tool runs on top of these hardware and OS layers.",
+            prerequisites: "None — designed for complete beginners.",
+            simpleExplanation: "Think of a computer like a workshop: the **CPU** is the worker's hands, **RAM** is the workbench (fast but clears when power turns off), **SSD Storage** is the filing cabinet, and the **GPU** is a team of parallel painters. **Windows** and **Linux** are the Operating Systems managing them all.",
+            technicalExplanation: "The OS kernel arbitrates CPU scheduling, virtual memory paging, device drivers, and hierarchical file systems (NTFS on Windows, ext4 on Linux).",
+            realWorldExample: "Linux powers ~95% of cloud AI servers, while Windows and macOS power most personal workstations.",
+            guidedPractice: "Open the PC Component Lab and assemble a balanced workstation.",
+            independentChallenge: "Check your computer's CPU, RAM, and disk free space in System Settings.",
+            commonMistakes: "Confusing RAM (temporary working memory) with SSD storage capacity.",
+            keyVocab: ["CPU", "RAM", "GPU", "SSD", "Windows / Linux"],
+            revisionQuestions: ["What happens to RAM when power turns off?", "Why does AI rely heavily on GPUs?"],
+            knowledgeCheck: {
+              question: "Which component loses all data when the computer turns off?",
+              options: ["NVMe SSD", "RAM", "USB Drive", "Hard Disk"],
+              correct: 1,
+              explanation: "RAM is volatile working memory—it clears when powered down."
+            }
+          }
+        ]
+      }
+    ],
+    quiz: [
+      { id: "q0-1", type: "mc", question: "Which OS powers most cloud servers and AI training clusters?", options: ["Linux", "Paint", "BIOS", "Excel"], correct: 0, explanation: "Linux dominates cloud and AI infrastructure." },
+      { id: "q0-2", type: "tf", question: "True or False: Increasing SSD capacity automatically doubles your RAM.", options: ["True", "False"], correct: 1, explanation: "SSD is persistent storage; RAM is separate volatile memory." },
+      { id: "q0-3", type: "mc", question: "What is the safest response to an urgent email asking you to click a shortened link to verify your password?", options: ["Click immediately", "Ignore the link and visit the official website/app directly", "Reply with your password", "Forward it"], correct: 1, explanation: "Urgent unsolicited links are a classic phishing indicator." }
+    ],
+    bossChallenge: {
+      title: "Boss Challenge: Digital Sanctuary Audit",
+      prompt: "A beginner's PC is slow with 200 files on the Desktop and no backups. Outline the hardware check, folder cleanup, and 3-2-1 backup plan.",
+      checklist: ["Check RAM/CPU in Task Manager", "Organize folders", "3-2-1 Backup"]
+    },
+    project: {
+      tier: "Guided Beginner",
+      title: "Personal Digital Workspace",
+      problem: "Transform an unorganized computer into a clean, backed-up learning environment.",
+      requirements: ["3-tier folder hierarchy", "System spec card", "Backup verification"],
+      constraints: ["Zero plain-text passwords"],
+      deliverables: ["Workspace Map", "Backup Note"],
+      architecture: "Root -> Academy / Projects / Backups.",
+      milestones: ["Clean Desktop", "Create folders", "Verify cloud sync"],
+      hints: ["Use 3 copies, 2 media types, 1 offsite cloud copy."],
+      rubric: ["Clarity", "Security", "Completeness"]
+    }
+  },
   {
     id: 1,
     title: "Digital Awakening",
@@ -3099,7 +3218,7 @@ const CURRICULUM = [...CURRICULUM_1_10, ...CURRICULUM_11_20];
    ========================================================================== */
 
 const DEFAULT_STATE = () => ({
-  schemaVersion: 2,
+  schemaVersion: 3,
   introSeen: false,
   onboardingDone: false,
   profile: {
@@ -3129,7 +3248,7 @@ const DEFAULT_STATE = () => ({
   progress: {
     xp: 0,
     xpSources: {},
-    unlockedLevels: [1],
+    unlockedLevels: [0, 1],
     completedLevels: [],
     completedLessons: [],
     completedChecks: [],
@@ -3152,8 +3271,8 @@ const DEFAULT_STATE = () => ({
   portfolio: [],
   ui: {
     activeView: "home",
-    activeLevelId: 1,
-    activeLessonId: "1-1-1",
+    activeLevelId: 0,
+    activeLessonId: "0-1-1",
     activeLabId: "pc_lab",
     novaOpen: false,
     novaMode: "Teacher",
@@ -3181,6 +3300,7 @@ function loadState() {
   } catch (err) {
     console.warn("localStorage unavailable or corrupted, using in-memory state:", err);
   }
+  if (!APP_STATE.progress.unlockedLevels.includes(0)) APP_STATE.progress.unlockedLevels.unshift(0);
   updateStreak();
   initSkillMasteryMap();
 }
@@ -3438,7 +3558,7 @@ function initSkillMasteryMap() {
   CURRICULUM.forEach(lvl => lvl.skillTags.forEach(s => allSkills.add(s)));
   allSkills.forEach(skill => {
     if (!APP_STATE.progress.skillMastery[skill]) {
-      APP_STATE.progress.skillMastery[skill] = { status: "unseen", attempts: 0, mistakes: 0, lastPracticed: null, confidence: 0 };
+      APP_STATE.progress.skillMastery[skill] = { status: "not_started", attempts: 0, mistakes: 0, lastPracticed: null, confidence: 0 };
     }
   });
 }
@@ -3446,7 +3566,7 @@ function initSkillMasteryMap() {
 function updateSkillEvidence(skills, eventType, passed) {
   const now = new Date().toISOString().slice(0, 10);
   (skills || []).forEach(skill => {
-    const rec = APP_STATE.progress.skillMastery[skill] || { status: "unseen", attempts: 0, mistakes: 0, lastPracticed: null, confidence: 0 };
+    const rec = APP_STATE.progress.skillMastery[skill] || { status: "not_started", attempts: 0, mistakes: 0, lastPracticed: null, confidence: 0 };
     rec.attempts += 1;
     rec.lastPracticed = now;
     if (!passed) {
@@ -3454,7 +3574,7 @@ function updateSkillEvidence(skills, eventType, passed) {
       rec.status = rec.mistakes >= 2 ? "needs_revision" : "practicing";
       rec.confidence = Math.max(20, rec.confidence - 15);
     } else {
-      if (eventType === "lesson") { if (rec.status === "unseen") rec.status = "introduced"; rec.confidence = Math.max(rec.confidence, 45); }
+      if (eventType === "lesson") { if (rec.status === "not_started") rec.status = "introduced"; rec.confidence = Math.max(rec.confidence, 45); }
       else if (eventType === "check" || eventType === "lab") { rec.status = rec.status === "mastered" ? "mastered" : "practicing"; rec.confidence = Math.max(rec.confidence, 65); }
       else if (eventType === "quiz") { rec.status = rec.mistakes > 1 ? "competent" : "mastered"; rec.confidence = Math.max(rec.confidence, 90); }
     }
@@ -4302,15 +4422,28 @@ return passing_avg([90, 40, 80, 100]);</textarea>
 }
 function runPythonLab() {
   const code = document.getElementById("py-code").value;
-  try {
-    const fn = new Function(code);
-    const res = fn();
-    const ok = res === 90;
-    document.getElementById("py-out").innerHTML = `Returned: <strong>${JSON.stringify(res)}</strong> ${ok ? '<span style="color:var(--accent-emerald)"> — Passed! Expected 90.</span>' : '<span style="color:var(--accent-amber)"> — Expected 90.</span>'}`;
-    if (ok) completeLabChallenge("python_lab", "Python Sandbox Lab");
-  } catch (err) {
-    document.getElementById("py-out").innerHTML = `<span style="color:var(--accent-rose)">Error: ${err.message}</span>`;
-  }
+  const outEl = document.getElementById("py-out");
+  // Security: execute learner code inside an isolated sandboxed iframe (without allow-same-origin)
+  let frame = document.getElementById("py-sandbox-frame");
+  if (frame) frame.remove();
+  frame = document.createElement("iframe");
+  frame.id = "py-sandbox-frame";
+  frame.setAttribute("sandbox", "allow-scripts");
+  frame.style.display = "none";
+  const handler = (ev) => {
+    if (!ev.data || ev.data.type !== "rickyai_py_result") return;
+    window.removeEventListener("message", handler);
+    if (ev.data.error) {
+      outEl.innerHTML = `<span style="color:var(--accent-rose)">Error: ${escapeHtml(ev.data.error)}</span>`;
+    } else {
+      const ok = ev.data.result === 90;
+      outEl.innerHTML = `Returned: <strong>${escapeHtml(JSON.stringify(ev.data.result))}</strong> ${ok ? '<span style="color:var(--accent-emerald)"> — Passed! Expected 90.</span>' : '<span style="color:var(--accent-amber)"> — Expected 90.</span>'}`;
+      if (ok) completeLabChallenge("python_lab", "Python Sandbox Lab");
+    }
+  };
+  window.addEventListener("message", handler);
+  frame.srcdoc = `<script>try{const fn=new Function(${JSON.stringify(code)});parent.postMessage({type:"rickyai_py_result",result:fn()},"*");}catch(e){parent.postMessage({type:"rickyai_py_result",error:e.message},"*");}<\/script>`;
+  document.body.appendChild(frame);
 }
 
 /* 5. HTML & CSS LIVE LAB */
@@ -4785,7 +4918,7 @@ function renderHomeView() {
         <p><strong>Active Zone:</strong> Level ${activeLvl.id} — ${activeLvl.title} (${activeLvl.zoneName})</p>
         <p style="font-size:0.88rem;">${activeLvl.finalMission}</p>
         <hr style="border:none;border-top:1px solid var(--border-subtle);margin:0.85rem 0;">
-        ${nextLocked ? `<p style="font-size:0.88rem;"><strong>Next Unlock:</strong> Level ${nextLocked.id} (${nextLocked.title})<br><span style="color:var(--text-muted)">Condition: ${nextLocked.unlockCondition}</span></p>` : `<p>All 20 Levels Unlocked! Complete Level 20 Capstone to Graduate.</p>`}
+        ${nextLocked ? `<p style="font-size:0.88rem;"><strong>Next Unlock:</strong> Level ${nextLocked.id} (${nextLocked.title})<br><span style="color:var(--text-muted)">Condition: ${nextLocked.unlockCondition}</span></p>` : `<p>All 21 Levels (0–20) Unlocked! Complete Level 20 Capstone to Graduate.</p>`}
         <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem;">
           <button class="btn-sm btn-secondary" onclick="navigateTo('careers')">Career Navigator</button>
           <button class="btn-sm" onclick="navigateTo('portfolio')">Portfolio (${APP_STATE.portfolio.length})</button>
@@ -4820,7 +4953,7 @@ function renderMapAndGraphView() {
     <div class="world-map-container" style="margin-bottom:1.5rem;">
       <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
         <h3>20 Mastery Zones</h3>
-        <span class="badge badge-emerald">${p.completedLevels.length} / 20 Completed</span>
+        <span class="badge badge-emerald">${p.completedLevels.length} / 21 Completed</span>
       </div>
       ${buildWorldConstellationSvg()}
       <div class="world-zones-grid">
@@ -4844,6 +4977,30 @@ function renderMapAndGraphView() {
       </div>
     </div>
 
+    <div class="panel">
+      <div class="panel" style="margin-bottom:1.5rem;">
+      <h3>Visual Skill Tree (Foundations • Python • Data • AI)</h3>
+      <p style="font-size:0.86rem;">Skills connect directly to levels and career pathways. Nodes update automatically as you earn mastery.</p>
+      <div class="grid-2">
+        ${SKILL_TREE_BRANCHES.map(br => `
+          <div class="panel-elevated">
+            <div class="lesson-section-label" style="color:${br.color};">${br.branch}</div>
+            <div style="display:flex;flex-direction:column;gap:0.45rem;">
+              ${br.nodes.map(nd => {
+                const done = APP_STATE.progress.completedLevels.includes(nd.level);
+                const unl = APP_STATE.progress.unlockedLevels.includes(nd.level);
+                const badgeCls = done ? "badge-emerald" : unl ? "badge-primary" : "badge";
+                const stateLbl = done ? "Mastered" : unl ? "Available" : "Locked";
+                return `<div style="display:flex;justify-content:space-between;align-items:center;gap:0.4rem;padding:0.4rem 0.6rem;background:var(--bg-primary);border-radius:6px;">
+                  <div><strong style="font-size:0.85rem;">${nd.name}</strong><div style="font-size:0.72rem;color:var(--text-muted);">L${nd.level} • ${nd.careers.join(", ")}</div></div>
+                  <span class="badge ${badgeCls}">${stateLbl}</span>
+                </div>`;
+              }).join("")}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
     <div class="panel">
       <h3>Knowledge Graph & Skill Prerequisites</h3>
       <p style="font-size:0.88rem;">See why every foundational skill matters and what advanced AI capabilities it unlocks.</p>
@@ -4912,7 +5069,7 @@ function renderLearningView() {
   return `
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;">
       <div>
-        <span class="badge badge-primary">Level ${lvl.id} of 20 • ${lvl.zoneName}</span>
+        <span class="badge badge-primary">Level ${lvl.id} (0–20) • ${lvl.zoneName}</span>
         <h1 style="margin-top:0.25rem;">${lvl.title}</h1>
       </div>
       <div style="display:flex;gap:0.5rem;align-items:center;">
